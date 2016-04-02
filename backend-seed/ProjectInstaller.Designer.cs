@@ -1,5 +1,8 @@
 ﻿namespace backend_seed
 {
+    /// <summary>
+    /// Generated class.  Used to allow the service installer functionality.
+    /// </summary>
     partial class ProjectInstaller
     {
         /// <summary>

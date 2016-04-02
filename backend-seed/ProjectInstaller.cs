@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace backend_seed
 {
+    /// <summary>
+    /// Generated class.  Used to allow service installer functionality.
+    /// </summary>
     [RunInstaller(true)]
     public partial class ProjectInstaller : System.Configuration.Install.Installer
     {

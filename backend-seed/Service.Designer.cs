@@ -1,5 +1,8 @@
 ﻿namespace backend_seed
 {
+    /// <summary>
+    /// Generated class.  Enables the program to run as a Windows service.
+    /// </summary>
     partial class Service
     {
         /// <summary> 

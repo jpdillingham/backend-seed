@@ -1,4 +1,8 @@
-﻿using NLog;
+﻿using backend_seed.Web;
+using backend_seed.Web.Hubs;
+using Microsoft.AspNet.SignalR;
+using Microsoft.Owin.Hosting;
+using NLog;
 using System;
 using System.Linq;
 using System.ServiceProcess;
@@ -6,6 +10,9 @@ using System.Text.RegularExpressions;
 
 namespace backend_seed
 {
+    /// <summary>
+    /// The main program class.
+    /// </summary>
     public class Program
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
@@ -86,7 +93,19 @@ namespace backend_seed
         {
             try
             {
+                // start the web server
+                string url = "http://*:" + Utility.GetSetting("WebPort");
+                WebApp.Start<Startup>(url);
+                logger.Info("Web server listening at '" + url + "/" + Utility.GetSetting("WebRoot") + "'.");
+
+                // start a timer to drive the signalr demo hub
+                System.Timers.Timer dateTimer = new System.Timers.Timer(1000);
+                dateTimer.Elapsed += DateTimer_Elapsed;
+                dateTimer.Start();
+
+
                 // TODO: implement application logic here
+
 
                 Console.WriteLine("Press any key to continue...");
                 Console.ReadLine();
@@ -102,6 +121,15 @@ namespace backend_seed
 
         }
 
+        // event handler for signalr demo timer
+        private static void DateTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            GlobalHost.ConnectionManager.GetHubContext<ExampleHub>().Clients.Group("Example").read(DateTime.Now);
+        }
+
+        /// <summary>
+        /// The exit point for the program's application logic.
+        /// </summary>
         public static void Stop()
         {
             // TODO: implement shutdown logic here
