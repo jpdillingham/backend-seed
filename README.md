@@ -1,2 +1,2 @@
 # backend-seed
-A backend seed application project in C# .NET.
+A backend application project seed in C# .NET.
